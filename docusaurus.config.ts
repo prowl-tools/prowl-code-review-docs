@@ -69,9 +69,20 @@ const config: Config = {
         src: "img/prowl-logo.png"
       },
       items: [
+        {
+          type: "dropdown",
+          label: "Docs",
+          position: "right",
+          items: [
+            { label: "Prowl CLI", href: "https://docs.prowl.tools" },
+            { label: "Code Review (this site)", href: "https://review.prowl.tools" },
+            { label: "Prowl Hub", href: "https://hub.prowl.tools" },
+            { label: "Prowl Infra", href: "https://infra.prowl.tools" },
+            { label: "All docs ↗", href: "https://prowl.tools/docs" }
+          ]
+        },
         { href: "https://prowl.tools/code-review", label: "Product", position: "right" },
         { href: "https://prowl.tools", label: "Suite", position: "right" },
-        { href: "https://docs.prowl.tools", label: "CLI Docs", position: "right" },
         { href: "https://github.com/prowl-tools/prowl-code-review", label: "GitHub", position: "right" },
         { href: "https://www.npmjs.com/package/prowl-review", label: "npm", position: "right" }
       ]
