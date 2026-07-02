@@ -63,9 +63,9 @@ const config: Config = {
       respectPrefersColorScheme: true
     },
     navbar: {
-      title: "Prowl Review",
+      title: "Prowl Code Review",
       logo: {
-        alt: "Prowl Review",
+        alt: "Prowl Code Review",
         src: "img/prowl-logo.png"
       },
       items: [
