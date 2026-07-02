@@ -1,51 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --ifm-color-primary: #0891b2;
-  --ifm-color-primary-dark: #077f9c;
-  --ifm-color-primary-darker: #077893;
-  --ifm-color-primary-darkest: #056379;
-  --ifm-color-primary-light: #0aa3c8;
-  --ifm-color-primary-lighter: #0bacd3;
-  --ifm-color-primary-lightest: #16c0e0;
+  --ifm-color-primary: #16a34a;
+  --ifm-color-primary-dark: #149141;
+  --ifm-color-primary-darker: #13883d;
+  --ifm-color-primary-darkest: #0f7032;
+  --ifm-color-primary-light: #1cbe58;
+  --ifm-color-primary-lighter: #22c55e;
+  --ifm-color-primary-lightest: #4ade80;
   --site-accent: #22c55e;
   --ifm-font-family-base: 'Source Sans 3', 'Trebuchet MS', 'Segoe UI', sans-serif;
   --ifm-heading-font-family: 'Space Grotesk', 'Avenir Next', sans-serif;
   --ifm-font-family-monospace: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
   --ifm-code-font-size: 92%;
-  --ifm-background-color: #f6fbfc;
-  --ifm-footer-background-color: #08202a;
-  --ifm-heading-color: #0b2530;
+  --ifm-background-color: #f7fdf9;
+  --ifm-footer-background-color: #0a2016;
+  --ifm-heading-color: #0c2a17;
   --ifm-link-hover-decoration: none;
   --ifm-navbar-height: 4.25rem;
-  --site-hero-bg: linear-gradient(135deg, #e7fbff 0%, #e9fff3 55%, #f2f7ff 100%);
+  --site-hero-bg: #ecfdf3;
   --site-surface: #ffffff;
-  --site-surface-strong: #ecfaf9;
-  --site-border: #c6e6ec;
-  --site-shadow: 0 16px 40px rgba(7, 33, 42, 0.08);
-  --site-grid-dot: rgba(8, 145, 178, 0.16);
-  --docusaurus-highlighted-code-line-bg: rgba(8, 145, 178, 0.13);
+  --site-surface-strong: #eafaf0;
+  --site-border: #c9ecd6;
+  --site-shadow: 0 16px 40px rgba(6, 40, 22, 0.08);
+  --site-grid-dot: rgba(34, 197, 94, 0.16);
+  --docusaurus-highlighted-code-line-bg: rgba(34, 197, 94, 0.13);
 }
 
 [data-theme='dark'] {
-  --ifm-color-primary: #22d3ee;
-  --ifm-color-primary-dark: #0fc9e8;
-  --ifm-color-primary-darker: #0dbfdd;
-  --ifm-color-primary-darkest: #0b9db6;
-  --ifm-color-primary-light: #45dbf1;
-  --ifm-color-primary-lighter: #57def2;
-  --ifm-color-primary-lightest: #8ae9f6;
-  --site-accent: #4ade80;
+  --ifm-color-primary: #22c55e;
+  --ifm-color-primary-dark: #1eb257;
+  --ifm-color-primary-darker: #1ba852;
+  --ifm-color-primary-darkest: #168a43;
+  --ifm-color-primary-light: #3ccf72;
+  --ifm-color-primary-lighter: #49d47c;
+  --ifm-color-primary-lightest: #6ddd97;
+  --site-accent: #22c55e;
   --ifm-background-color: #09090b;
-  --ifm-heading-color: #ecfdff;
+  --ifm-heading-color: #e9fdf1;
   --ifm-footer-background-color: #050506;
-  --site-hero-bg: linear-gradient(135deg, #0a1c22 0%, #0a231c 55%, #0b1622 100%);
-  --site-surface: #101317;
-  --site-surface-strong: #16202a;
-  --site-border: #24343d;
+  --site-hero-bg: #10231a;
+  --site-surface: #101312;
+  --site-surface-strong: #16231c;
+  --site-border: #26332c;
   --site-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
-  --site-grid-dot: rgba(34, 211, 238, 0.18);
-  --docusaurus-highlighted-code-line-bg: rgba(34, 211, 238, 0.2);
+  --site-grid-dot: rgba(34, 197, 94, 0.18);
+  --docusaurus-highlighted-code-line-bg: rgba(34, 197, 94, 0.2);
 }
 
 html,
@@ -53,11 +53,6 @@ body {
   min-height: 100%;
 }
 
-body {
-  background-image:
-    radial-gradient(circle at 15% -10%, rgba(8, 145, 178, 0.16), transparent 42%),
-    radial-gradient(circle at 85% 5%, rgba(34, 197, 94, 0.18), transparent 35%);
-}
 
 .main-wrapper {
   position: relative;
@@ -94,7 +89,7 @@ body {
 
 .theme-announcement-bar {
   border-bottom: 1px solid var(--site-border);
-  background: linear-gradient(90deg, #0891b2 0%, #12a594 55%, #22c55e 100%);
+  background: #15803d;
 }
 
 .theme-announcement-bar a {
@@ -182,7 +177,7 @@ body {
 .card-grid .card:hover {
   transform: translateY(-2px);
   border-color: var(--ifm-color-primary-light);
-  box-shadow: 0 12px 30px rgba(8, 145, 178, 0.2);
+  box-shadow: 0 12px 30px rgba(34, 197, 94, 0.2);
   text-decoration: none;
   color: inherit;
 }
