@@ -58,9 +58,9 @@ const config: Config = {
       isCloseable: true
     },
     colorMode: {
-      defaultMode: "dark",
-      disableSwitch: false,
-      respectPrefersColorScheme: true
+      defaultMode: "light",
+      disableSwitch: true,
+      respectPrefersColorScheme: false
     },
     navbar: {
       title: "Prowl Review",
