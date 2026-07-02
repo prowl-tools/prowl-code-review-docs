@@ -1,36 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-/*
- * prowl-review docs — a deliberately distinct identity within the suite:
- * a royal-blue, light-only theme (prowl-web is cyan→green, prowl-docs is teal).
- * The structure mirrors the other suite docs; only the palette differs.
- */
-
 :root {
-  --ifm-color-primary: #2f54eb;
-  --ifm-color-primary-dark: #2545d8;
-  --ifm-color-primary-darker: #2341cc;
-  --ifm-color-primary-darkest: #1c36a8;
-  --ifm-color-primary-light: #4a6bef;
-  --ifm-color-primary-lighter: #5877f0;
-  --ifm-color-primary-lightest: #85a0f5;
-  --site-accent: #4a6bef;
+  --ifm-color-primary: #0891b2;
+  --ifm-color-primary-dark: #077f9c;
+  --ifm-color-primary-darker: #077893;
+  --ifm-color-primary-darkest: #056379;
+  --ifm-color-primary-light: #0aa3c8;
+  --ifm-color-primary-lighter: #0bacd3;
+  --ifm-color-primary-lightest: #16c0e0;
+  --site-accent: #22c55e;
   --ifm-font-family-base: 'Source Sans 3', 'Trebuchet MS', 'Segoe UI', sans-serif;
   --ifm-heading-font-family: 'Space Grotesk', 'Avenir Next', sans-serif;
   --ifm-font-family-monospace: 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
   --ifm-code-font-size: 92%;
-  --ifm-background-color: #f8faff;
-  --ifm-footer-background-color: #0f1b3d;
-  --ifm-heading-color: #14213f;
+  --ifm-background-color: #f6fbfc;
+  --ifm-footer-background-color: #08202a;
+  --ifm-heading-color: #0b2530;
   --ifm-link-hover-decoration: none;
   --ifm-navbar-height: 4.25rem;
-  --site-hero-bg: linear-gradient(135deg, #eef2ff 0%, #e6ecff 55%, #f2f5ff 100%);
+  --site-hero-bg: linear-gradient(135deg, #e7fbff 0%, #e9fff3 55%, #f2f7ff 100%);
   --site-surface: #ffffff;
-  --site-surface-strong: #eef2ff;
-  --site-border: #d3ddf5;
-  --site-shadow: 0 16px 40px rgba(20, 33, 63, 0.10);
-  --site-grid-dot: rgba(47, 84, 235, 0.16);
-  --docusaurus-highlighted-code-line-bg: rgba(47, 84, 235, 0.12);
+  --site-surface-strong: #ecfaf9;
+  --site-border: #c6e6ec;
+  --site-shadow: 0 16px 40px rgba(7, 33, 42, 0.08);
+  --site-grid-dot: rgba(8, 145, 178, 0.16);
+  --docusaurus-highlighted-code-line-bg: rgba(8, 145, 178, 0.13);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #22d3ee;
+  --ifm-color-primary-dark: #0fc9e8;
+  --ifm-color-primary-darker: #0dbfdd;
+  --ifm-color-primary-darkest: #0b9db6;
+  --ifm-color-primary-light: #45dbf1;
+  --ifm-color-primary-lighter: #57def2;
+  --ifm-color-primary-lightest: #8ae9f6;
+  --site-accent: #4ade80;
+  --ifm-background-color: #09090b;
+  --ifm-heading-color: #ecfdff;
+  --ifm-footer-background-color: #050506;
+  --site-hero-bg: linear-gradient(135deg, #0a1c22 0%, #0a231c 55%, #0b1622 100%);
+  --site-surface: #101317;
+  --site-surface-strong: #16202a;
+  --site-border: #24343d;
+  --site-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+  --site-grid-dot: rgba(34, 211, 238, 0.18);
+  --docusaurus-highlighted-code-line-bg: rgba(34, 211, 238, 0.2);
 }
 
 html,
@@ -40,8 +55,8 @@ body {
 
 body {
   background-image:
-    radial-gradient(circle at 15% -10%, rgba(47, 84, 235, 0.14), transparent 42%),
-    radial-gradient(circle at 85% 5%, rgba(120, 150, 250, 0.16), transparent 35%);
+    radial-gradient(circle at 15% -10%, rgba(8, 145, 178, 0.16), transparent 42%),
+    radial-gradient(circle at 85% 5%, rgba(34, 197, 94, 0.18), transparent 35%);
 }
 
 .main-wrapper {
@@ -64,7 +79,7 @@ body {
   background: color-mix(in srgb, var(--ifm-background-color) 80%, transparent);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--site-border);
-  box-shadow: 0 8px 22px rgba(20, 33, 63, 0.08);
+  box-shadow: 0 8px 22px rgba(7, 33, 42, 0.08);
 }
 
 .navbar__title {
@@ -74,12 +89,12 @@ body {
 
 .navbar__logo img {
   border-radius: 999px;
-  box-shadow: 0 4px 16px rgba(15, 27, 61, 0.35);
+  box-shadow: 0 4px 16px rgba(5, 29, 38, 0.35);
 }
 
 .theme-announcement-bar {
   border-bottom: 1px solid var(--site-border);
-  background: linear-gradient(90deg, #1c36a8 0%, #2f54eb 55%, #4a6bef 100%);
+  background: linear-gradient(90deg, #0891b2 0%, #12a594 55%, #22c55e 100%);
 }
 
 .theme-announcement-bar a {
@@ -160,14 +175,14 @@ body {
   text-decoration: none;
   color: inherit;
   background: color-mix(in srgb, var(--site-surface) 84%, transparent);
-  box-shadow: 0 8px 18px rgba(20, 33, 63, 0.06);
+  box-shadow: 0 8px 18px rgba(5, 21, 30, 0.06);
   transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
 .card-grid .card:hover {
   transform: translateY(-2px);
   border-color: var(--ifm-color-primary-light);
-  box-shadow: 0 12px 30px rgba(47, 84, 235, 0.2);
+  box-shadow: 0 12px 30px rgba(8, 145, 178, 0.2);
   text-decoration: none;
   color: inherit;
 }
@@ -229,7 +244,7 @@ body {
 .docs-hero__art img {
   width: min(240px, 100%);
   height: auto;
-  filter: drop-shadow(0 16px 24px rgba(15, 27, 61, 0.25));
+  filter: drop-shadow(0 16px 24px rgba(6, 24, 35, 0.25));
   animation: mascotFloat 3.6s ease-in-out infinite;
 }
 
