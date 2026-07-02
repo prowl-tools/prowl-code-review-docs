@@ -37,15 +37,15 @@
   --ifm-color-primary-lightest: #bbf7d0;
   --site-accent: #4ade80;
   /* Green canvas with white dots, not near-black with green dots. */
-  --ifm-background-color: #0b3a23;
+  --ifm-background-color: #0e4a2c;
   --ifm-heading-color: #ffffff;
-  --ifm-footer-background-color: #072e1b;
-  --site-hero-bg: #10472c;
-  --site-surface: #0f4429;
-  --site-surface-strong: #145232;
-  --site-border: #256a45;
+  --ifm-footer-background-color: #0a3a22;
+  --site-hero-bg: #125433;
+  --site-surface: #0b3d24;
+  --site-surface-strong: #135231;
+  --site-border: #2a6b48;
   --site-shadow: 0 18px 44px rgba(0, 0, 0, 0.35);
-  --site-grid-dot: rgba(255, 255, 255, 0.18);
+  --site-grid-dot: rgba(255, 255, 255, 0.2);
   --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.1);
 }
 
@@ -62,18 +62,9 @@ body {
 
 .main-wrapper {
   position: relative;
-}
-
-.main-wrapper::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(var(--site-grid-dot) 0.9px, transparent 0.9px);
+  background-color: var(--ifm-background-color);
+  background-image: radial-gradient(var(--site-grid-dot) 1px, transparent 1px);
   background-size: 24px 24px;
-  -webkit-mask-image: linear-gradient(to bottom, black 8%, transparent 80%);
-  mask-image: linear-gradient(to bottom, black 8%, transparent 80%);
 }
 
 .navbar {
