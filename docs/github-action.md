@@ -67,6 +67,8 @@ Add a second workflow for `@prowl-review` chat/commands:
 on:
   issue_comment:
     types: [created]
+  pull_request_review_comment:
+    types: [created]
 permissions:
   pull-requests: write
   issues: write
@@ -75,8 +77,11 @@ permissions:
 jobs:
   command:
     if: >
-      github.event.issue.pull_request &&
-      contains(github.event.comment.body, '@prowl-review')
+      contains(github.event.comment.body, '@prowl-review') &&
+      (
+        github.event_name == 'pull_request_review_comment' ||
+        github.event.issue.pull_request
+      )
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

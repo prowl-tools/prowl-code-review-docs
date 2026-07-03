@@ -41,5 +41,6 @@ listed in [Configuration](/configuration): `minSeverity`, `minConfidence`,
 replies with usage instead of silently weakening the review. Use
 `@prowl-review configure reset` to clear them.
 
-Wiring the command workflow requires an `issue_comment` (and optionally
-`pull_request_review_comment`) trigger — see [GitHub Action](/github-action#commands).
+Wiring the command workflow requires both `issue_comment` for PR conversation
+comments and `pull_request_review_comment` for inline finding-thread replies —
+see [GitHub Action](/github-action#commands).
