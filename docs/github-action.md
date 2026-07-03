@@ -106,7 +106,8 @@ permissions:
   contents: read
 jobs:
   review:
-    uses: Prowl-qa/.github/.github/workflows/prowl-review.yml@v1
+    # Replace YOUR-ORG with the org or owner that hosts the reusable workflow.
+    uses: YOUR-ORG/.github/.github/workflows/prowl-review.yml@v1
     secrets: inherit
 ```
 

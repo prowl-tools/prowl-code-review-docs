@@ -61,9 +61,10 @@ prowl-review retains **nothing** — no database, no logs of your code, no copy 
 your key. State that persists (incremental-review markers, the repo-wide learnings
 store) lives **in your own GitHub** as PR-comment markers and a tracking issue in
 your repo, under your control. What your provider retains is governed by **your
-account and your agreement with that provider** — configure zero-retention /
-no-training on your provider account and it applies to prowl-review's requests
-automatically.
+account, provider policy, and your agreement with that provider**. If your
+provider account offers zero-retention, no-training, or similar data-use controls
+and you enable them, those provider-side settings apply to prowl-review's direct
+API requests automatically.
 
 ## Why this beats hosted SaaS reviewers
 

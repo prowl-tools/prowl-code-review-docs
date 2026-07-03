@@ -13,7 +13,7 @@ minor nitpicks stay in the summary's collapsed section.
 
 > **Impact:** 🟢 Low · **Estimated effort:** ▰▰▰▱▱ (3/5) · **Findings:** 🔴 1 🟠 1 🟡 1
 
-### Walkthrough
+## Walkthrough
 
 Refreshes the OAuth access token before expiry, but the new path drops an error a
 caller still depends on and can race two concurrent refreshes.

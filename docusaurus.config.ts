@@ -8,6 +8,9 @@ const config: Config = {
   favicon: "img/favicon.ico",
 
   headTags: [
+    { tagName: "link", attributes: { rel: "preconnect", href: "https://fonts.googleapis.com" } },
+    { tagName: "link", attributes: { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous" } },
+    { tagName: "link", attributes: { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" } },
     { tagName: "link", attributes: { rel: "icon", type: "image/png", sizes: "32x32", href: "/img/favicon-32x32.png" } },
     { tagName: "link", attributes: { rel: "icon", type: "image/png", sizes: "16x16", href: "/img/favicon-16x16.png" } },
     { tagName: "link", attributes: { rel: "apple-touch-icon", sizes: "180x180", href: "/img/apple-touch-icon.png" } }
