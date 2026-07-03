@@ -5,8 +5,8 @@ title: Repo-wide learnings
 # Repo-wide learnings
 
 By default, muting a finding with [`@prowl-review ignore`](/bot-commands) or
-`resolve` is scoped to that PR. **Repo-wide learnings** persists the mute so it
-teaches **every** future PR — the OSS, BYOK equivalent of CodeRabbit "learnings",
+`resolve` is scoped to that PR. **Repo-wide learnings** persist the mute so they
+teach **every** future PR — the OSS, BYOK equivalent of CodeRabbit "learnings",
 with no external store.
 
 ## Enable it

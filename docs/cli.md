@@ -13,8 +13,10 @@ npm install -g prowl-review
 npx prowl-review <command>
 ```
 
-All commands read the provider key from the environment (`PROWL_AI_KEY` or
-`PROWL_AI_KEY_<PROVIDER>`) — see [Auth](/auth).
+All commands resolve the provider from `PROWL_AI_PROVIDER` (`anthropic` by
+default), then read `PROWL_AI_KEY_<PROVIDER>` first and fall back to
+`PROWL_AI_KEY` only when the provider-scoped key is absent. If neither key is set,
+the run fails fast — see [Auth](/auth).
 
 ## `prowl-review review`
 
