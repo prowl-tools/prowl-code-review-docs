@@ -75,6 +75,26 @@ auto-provisioned Actions token, no PAT or GitHub App required. To post under a
 custom GitHub-App identity, supply that app's token as `github-token` and set
 `bot-login`.
 
+### Bring your own bot identity
+
+The bot branding is **not baked into the tool** — nothing "Prowl" or raccoon ships
+inside the package. The Action posts as whatever identity you hand it via
+`github-token` / `bot-login`, so every team can make prowl-review look like their
+own in-house reviewer. It pairs naturally with BYOK: **your key, your bot.**
+
+| Tier | Posts as | Setup |
+| --- | --- | --- |
+| **Default** | `github-actions[bot]` | Nothing — works out of the box with just your AI key. |
+| **Your own brand** | `your-app[bot]` + **your** name & avatar | Register **your own** GitHub App (any name/avatar), add your `PROWL_APP_ID` / `PROWL_APP_PRIVATE_KEY` secrets. Identity is entirely yours. |
+| **Local CLI** | *(no bot — prints to your terminal)* | Run `prowl-review` locally; no GitHub identity involved. |
+
+There's no lock-in to the Prowl raccoon: a team can register `acme-review[bot]`
+with their own logo and nobody would know it's built on prowl-review unless they
+read the workflow. An App's power lives in its private key (kept in your secrets,
+never shared), so each adopter registers their own — see the
+[Branded bot identity](https://github.com/prowl-tools/prowl-code-review#branded-bot-identity-59)
+setup in the README.
+
 ### Fork pull requests
 
 GitHub does not expose repository secrets to fork-triggered workflows, so a fork
