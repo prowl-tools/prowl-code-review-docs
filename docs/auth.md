@@ -75,6 +75,72 @@ auto-provisioned Actions token, no PAT or GitHub App required. To post under a
 custom GitHub-App identity, supply that app's token as `github-token` and set
 `bot-login`.
 
+### Bring your own bot identity
+
+The bot branding is **not baked into the tool** — nothing "Prowl" or raccoon ships
+inside the package. The Action posts as whatever identity you hand it via
+`github-token` / `bot-login`, so every team can make prowl-review look like their
+own in-house reviewer. It pairs naturally with BYOK: **your key, your bot.**
+
+| Tier | Posts as | Setup |
+| --- | --- | --- |
+| **Default** | `github-actions[bot]` | Nothing — works out of the box with just your AI key. |
+| **Your own brand** | `your-app[bot]` + **your** name & avatar | Register **your own** GitHub App (any name/avatar), add your `PROWL_APP_ID` / `PROWL_APP_PRIVATE_KEY` secrets, mint an installation token in the workflow, and pass it as `github-token` with `bot-login`. Identity is entirely yours. |
+| **Local CLI** | *(no bot — prints to your terminal)* | Run `prowl-review` locally; no GitHub identity involved. |
+
+For example, generate a short-lived installation token before prowl-review runs,
+then pass that token and the App bot login to the Action:
+
+```yaml
+steps:
+  - uses: actions/checkout@v4
+  - id: app-token
+    uses: actions/create-github-app-token@v3
+    with:
+      app-id: ${{ secrets.PROWL_APP_ID }}
+      private-key: ${{ secrets.PROWL_APP_PRIVATE_KEY }}
+      permission-contents: read
+      permission-issues: write
+      permission-pull-requests: write
+      permission-checks: write
+  - uses: prowl-tools/prowl-code-review@v1
+    with:
+      ai-key: ${{ secrets.PROWL_AI_KEY }}
+      github-token: ${{ steps.app-token.outputs.token }}
+      bot-login: ${{ steps.app-token.outputs.app-slug }}[bot]
+```
+
+There's no lock-in to the Prowl raccoon: a team can register `acme-review[bot]`
+with their own logo and nobody would know it's built on prowl-review unless they
+read the workflow. An App's power lives in its private key (kept in your secrets,
+never shared), so each adopter registers their own — see the
+[Branded bot identity](https://github.com/prowl-tools/prowl-code-review#branded-bot-identity-59)
+setup in the README.
+
+#### Reusing one App across repos and accounts
+
+A GitHub App is a **server-side identity, not a per-device install** — reuse it by
+installing it on more repos, never by copying anything to another machine. Where it
+can go depends on the App's **"Where can this GitHub App be installed?"** setting:
+
+- **More repos under the *same* owner** (the account/org that owns the App):
+  select each repository in the GitHub App installation so the App can access it.
+  `PROWL_APP_ID` / `PROWL_APP_PRIVATE_KEY` can be **org-level secrets** to expose
+  the credentials to authorized workflows, but secrets do not install the App or
+  grant repo access. One App can cover every repo included in that installation;
+  limit secret visibility to the repos that actually need to run it.
+- **Repos under a *different* owner** (e.g. your personal account when the App is
+  org-owned): the App must be set to **"Any account"** (public) to install it there
+  — flip it via **Make public** at the bottom of the App's settings. The private
+  key stays secret, so going public only exposes the App's profile and lets others
+  *install* it (inert without the key). The alternative is a **separate App** under
+  that owner; App names are globally unique, so its bot login won't be identical
+  (e.g. `prowl-review-personal[bot]`).
+
+Running the **CLI** on another machine is unrelated: install `prowl-review` there
+and set your AI key — the branded identity is a CI concept and doesn't live on the
+device.
+
 ### Fork pull requests
 
 GitHub does not expose repository secrets to fork-triggered workflows, so a fork
