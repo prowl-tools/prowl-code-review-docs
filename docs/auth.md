@@ -85,8 +85,30 @@ own in-house reviewer. It pairs naturally with BYOK: **your key, your bot.**
 | Tier | Posts as | Setup |
 | --- | --- | --- |
 | **Default** | `github-actions[bot]` | Nothing — works out of the box with just your AI key. |
-| **Your own brand** | `your-app[bot]` + **your** name & avatar | Register **your own** GitHub App (any name/avatar), add your `PROWL_APP_ID` / `PROWL_APP_PRIVATE_KEY` secrets. Identity is entirely yours. |
+| **Your own brand** | `your-app[bot]` + **your** name & avatar | Register **your own** GitHub App (any name/avatar), add your `PROWL_APP_ID` / `PROWL_APP_PRIVATE_KEY` secrets, mint an installation token in the workflow, and pass it as `github-token` with `bot-login`. Identity is entirely yours. |
 | **Local CLI** | *(no bot — prints to your terminal)* | Run `prowl-review` locally; no GitHub identity involved. |
+
+For example, generate a short-lived installation token before prowl-review runs,
+then pass that token and the App bot login to the Action:
+
+```yaml
+steps:
+  - uses: actions/checkout@v4
+  - id: app-token
+    uses: actions/create-github-app-token@v3
+    with:
+      app-id: ${{ secrets.PROWL_APP_ID }}
+      private-key: ${{ secrets.PROWL_APP_PRIVATE_KEY }}
+      permission-contents: read
+      permission-issues: write
+      permission-pull-requests: write
+      permission-checks: write
+  - uses: prowl-tools/prowl-code-review@v1
+    with:
+      ai-key: ${{ secrets.PROWL_AI_KEY }}
+      github-token: ${{ steps.app-token.outputs.token }}
+      bot-login: ${{ steps.app-token.outputs.app-slug }}[bot]
+```
 
 There's no lock-in to the Prowl raccoon: a team can register `acme-review[bot]`
 with their own logo and nobody would know it's built on prowl-review unless they
@@ -102,8 +124,11 @@ installing it on more repos, never by copying anything to another machine. Where
 can go depends on the App's **"Where can this GitHub App be installed?"** setting:
 
 - **More repos under the *same* owner** (the account/org that owns the App):
-  **Install App** on those repos, or set `PROWL_APP_ID` / `PROWL_APP_PRIVATE_KEY`
-  as **org-level secrets** so every repo inherits them. One App → unlimited repos.
+  select each repository in the GitHub App installation so the App can access it.
+  `PROWL_APP_ID` / `PROWL_APP_PRIVATE_KEY` can be **org-level secrets** to expose
+  the credentials to authorized workflows, but secrets do not install the App or
+  grant repo access. One App can cover every repo included in that installation;
+  limit secret visibility to the repos that actually need to run it.
 - **Repos under a *different* owner** (e.g. your personal account when the App is
   org-owned): the App must be set to **"Any account"** (public) to install it there
   — flip it via **Make public** at the bottom of the App's settings. The private
