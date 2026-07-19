@@ -46,7 +46,13 @@ jobs:
 | `guidelines-path` | Trusted checkout for `REVIEW_GUIDELINES.md`/`CLAUDE.md`/`LEARNED_PATTERNS.md`. |
 | `org-guidelines-path` | Org-wide guidelines file **or** `http(s)` URL. |
 | `github-token` | Token used to post (defaults to `${{ github.token }}`). |
+| `bot-login` | Expected bot login for a custom GitHub App token, e.g. `your-app[bot]`. |
 | `mode` | `review` (default) or `command`. |
+
+For a custom GitHub App identity, mint a short-lived installation token before
+this Action runs, pass that token as `github-token`, and set `bot-login` to the
+App bot login. See [Auth](/auth#bring-your-own-bot-identity) for the full
+workflow.
 
 See [Auth](/auth) for how keys are passed (masked secrets, env-only) and
 [Privacy](/privacy) for what leaves the runner.
