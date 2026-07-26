@@ -64,6 +64,26 @@ out the base branch to a separate path and point `config-path` at it, so a PR
 author can't change review policy from their branch. Config and guidelines always
 load from the trusted base, never from PR code.
 
+## Check run {#check-run}
+
+With `checkRun.enabled: true` (and the `checks: write` permission), each review also
+surfaces as a **Prowl Review** row in the PR checks list. The row is created
+**in-progress** the moment review work starts and completes in place when the review
+posts — so it shows a live running state and a duration, like any CI check. When you
+post with a [custom GitHub App token](/auth#bring-your-own-bot-identity), the row
+carries your App's avatar.
+
+Conclusions:
+
+- **Informational (no `failOn`)** — the check completes green (`success`), reporting
+  severity counts and per-line annotations. It never blocks a merge.
+- **Gated (`failOn: <severity>`)** — the check fails when any finding lands at or
+  above that severity. Mark the check **Required** in branch protection (required
+  check name: `Prowl Review`) to turn it into a real merge gate.
+- **Neutral** — reserved for reviews that deliberately didn't run (paused,
+  on-demand-only, draft) or couldn't complete (superseded by a newer commit, or an
+  error). A started run is always closed out — it never dangles "in progress".
+
 ## Commands {#commands}
 
 Add a second workflow for `@prowl-review` chat/commands:
