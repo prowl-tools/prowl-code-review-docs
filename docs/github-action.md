@@ -75,12 +75,15 @@ carries your App's avatar.
 
 Conclusions:
 
-- **Informational (no `failOn`)** — the check completes green (`success`), reporting
-  severity counts and per-line annotations. It never blocks a merge.
-- **Gated (`failOn: <severity>`)** — the check fails when any finding lands at or
-  above that severity. Mark the check **Required** in branch protection (required
-  check name: `Prowl Review`) to turn it into a real merge gate.
-- **Neutral** — reserved for reviews that deliberately didn't run (paused,
+- **Gated (`failOn: <severity>`)** — the check completes green (`success`) when no
+  finding lands at or above that severity, and red (`failure`) when one does — a
+  visual verdict with severity counts and per-line annotations. It does not block
+  merging unless you mark the check **Required** in branch protection (required
+  check name: `Prowl Review`), which turns it into a real merge gate.
+- **Informational (no `failOn`)** — the check completes grey (`neutral`), reporting
+  severity counts without implying a pass/fail verdict. Set `failOn` if you want
+  the green check.
+- **Neutral** is also used for reviews that deliberately didn't run (paused,
   on-demand-only, draft) or couldn't complete (superseded by a newer commit, or an
   error). A started run is always closed out — it never dangles "in progress".
 
