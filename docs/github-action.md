@@ -64,6 +64,34 @@ out the base branch to a separate path and point `config-path` at it, so a PR
 author can't change review policy from their branch. Config and guidelines always
 load from the trusted base, never from PR code.
 
+## Check run {#check-run}
+
+With `checkRun.enabled: true` (and the `checks: write` permission), each review also
+surfaces as a **Prowl Review** row in the PR checks list. The row is created
+**in-progress** the moment review work starts and completes in place when the review
+posts — so it shows a live running state and a duration, like any CI check. When you
+post with a [custom GitHub App token](/auth#bring-your-own-bot-identity), the row
+carries your App's avatar.
+
+Conclusions:
+
+- **Gated (`failOn: <severity>`)** — the check completes green (`success`) when no
+  finding lands at or above that severity, and red (`failure`) when one does — a
+  visual verdict with severity counts and per-line annotations. If review work
+  cannot complete after the row has started, the check fails closed (`failure`)
+  rather than completing neutral, so branch protection cannot be satisfied after
+  a runtime error. It does not block merging unless you mark the check **Required**
+  in branch protection (required check name: `Prowl Review`), which turns it into
+  a real merge gate.
+- **Informational (no `failOn`)** — the check completes grey (`neutral`), reporting
+  severity counts without implying a pass/fail verdict. GitHub can treat neutral
+  checks as successful for required-check purposes, so set `failOn` if you want a
+  severity-based merge gate.
+- **Neutral** is also used for reviews that deliberately didn't run (paused,
+  on-demand-only, draft) or were superseded by a newer commit. Runtime errors on
+  a started, non-superseded run close as `failure`. A started run is always closed
+  out — it never dangles "in progress".
+
 ## Commands {#commands}
 
 Add a second workflow for `@prowl-review` chat/commands:

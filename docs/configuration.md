@@ -42,6 +42,10 @@ grounding:
 suggestions:
   minConfidence: 0.8        # min confidence to offer a committable suggestion block
 
+checkRun:
+  enabled: false            # publish a "Prowl Review" row in the PR checks list
+  # failOn: major           # fail the check at/above this severity (omit = informational)
+
 ensemble:
   enabled: false            # review with multiple providers at once
   providers:
@@ -70,6 +74,8 @@ ignore:
 | `context.enabled` / `maxRounds` / `maxFiles` | `true` / `6` / `20` | [Cross-file context](/cross-file-context) bounds. |
 | `grounding.enabled` / `semgrep` | `true` | [Linter/SAST grounding](/grounding). |
 | `suggestions.minConfidence` | `0.8` | Min confidence to offer a committable suggestion. |
+| `checkRun.enabled` | `false` | Publish a **Prowl Review** check run — see [Check run](/github-action#check-run). |
+| `checkRun.failOn` | *(unset)* | Severity at/above which the check fails; below it, green. Unset = informational `neutral` on ordinary completion. |
 | `ensemble.enabled` / `providers` | `false` | [Multi-provider ensemble](/ensemble). |
 | `ignore` | built-ins | Globs excluded from review. |
 
