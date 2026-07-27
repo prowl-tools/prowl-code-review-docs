@@ -77,15 +77,20 @@ Conclusions:
 
 - **Gated (`failOn: <severity>`)** — the check completes green (`success`) when no
   finding lands at or above that severity, and red (`failure`) when one does — a
-  visual verdict with severity counts and per-line annotations. It does not block
-  merging unless you mark the check **Required** in branch protection (required
-  check name: `Prowl Review`), which turns it into a real merge gate.
+  visual verdict with severity counts and per-line annotations. If review work
+  cannot complete after the row has started, the check fails closed (`failure`)
+  rather than completing neutral, so branch protection cannot be satisfied after
+  a runtime error. It does not block merging unless you mark the check **Required**
+  in branch protection (required check name: `Prowl Review`), which turns it into
+  a real merge gate.
 - **Informational (no `failOn`)** — the check completes grey (`neutral`), reporting
-  severity counts without implying a pass/fail verdict. Set `failOn` if you want
-  the green check.
+  severity counts without implying a pass/fail verdict. GitHub can treat neutral
+  checks as successful for required-check purposes, so set `failOn` if you want a
+  severity-based merge gate.
 - **Neutral** is also used for reviews that deliberately didn't run (paused,
-  on-demand-only, draft) or couldn't complete (superseded by a newer commit, or an
-  error). A started run is always closed out — it never dangles "in progress".
+  on-demand-only, draft) or were superseded by a newer commit. Runtime errors on
+  a started, non-superseded run close as `failure`. A started run is always closed
+  out — it never dangles "in progress".
 
 ## Commands {#commands}
 
