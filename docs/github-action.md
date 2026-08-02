@@ -10,6 +10,8 @@ also run in command mode for `@prowl-review` chat.
 
 ## Auto-review workflow
 
+The simplest setup — a standalone `pull_request`-triggered workflow:
+
 ```yaml
 # .github/workflows/prowl-review.yml
 name: prowl-review
@@ -34,6 +36,53 @@ jobs:
           # ai-provider: anthropic   # anthropic | openai | gemini
 ```
 
+:::note One checks row or two?
+A `pull_request`-triggered workflow always adds its own octocat Actions row to the
+PR checks list, next to the branded [Prowl Review check run](#check-run) — so
+prowl-review appears twice. For the hosted-reviewer look (the branded row **only**),
+use the [single-row `workflow_run` setup](#single-row) below.
+:::
+
+## Single branded row (`workflow_run`) {#single-row}
+
+Workflows triggered by `workflow_run` — "run when CI finishes" — attach **no row**
+to the PR checks list. Chaining the auto-review off your CI workflow makes the
+branded **Prowl Review** check run the only prowl-review presence on the PR:
+
+```yaml
+# .github/workflows/prowl-review.yml
+name: prowl-review
+on:
+  workflow_run:
+    workflows: [CI]        # the `name:` of your CI workflow
+    types: [completed]
+permissions:
+  pull-requests: write
+  issues: write
+  checks: write
+  contents: read
+  actions: read            # read the completed CI run for PR resolution
+```
+
+Requirements and behavior:
+
+- **Your CI workflow must subscribe to the PR transitions** that should trigger a
+  review (`workflow_run` does not preserve the original action):
+  `on: pull_request: types: [opened, synchronize, ready_for_review, reopened]`.
+- The review starts when CI **succeeds** (~1 min after the PR event); failed or
+  cancelled CI never starts a review.
+- The workflow resolves the PR from the `workflow_run` payload (requiring exactly
+  one open PR at the CI head SHA) and hands it to the action via the `pr-number`
+  input; fork and draft PRs are skipped safely.
+- The [check run](#check-run) becomes the only prowl-review status on the PR —
+  keep `checkRun.enabled: true` so reviews stay visible.
+
+The full PR-resolution wiring lives in the maintained templates — copy
+[`examples/reusable/`](https://github.com/prowl-tools/prowl-code-review/tree/main/examples/reusable)
+(org-wide, recommended) rather than hand-rolling it. The standalone
+`pull_request` variant above remains fully supported when the extra Actions row
+doesn't bother you.
+
 ## Inputs
 
 | Input | Purpose |
@@ -48,6 +97,7 @@ jobs:
 | `github-token` | Token used to post (defaults to `${{ github.token }}`). |
 | `bot-login` | Expected bot login for a custom GitHub App token, e.g. `your-app[bot]`. |
 | `mode` | `review` (default) or `command`. |
+| `pr-number` | Explicit PR number to review — required for [`workflow_run`-triggered](#single-row) workflows (that event carries no PR context). Empty = resolve from the GitHub event. |
 
 For a custom GitHub App identity, mint a short-lived installation token before
 this Action runs, pass that token as `github-token`, and set `bot-login` to the
@@ -135,19 +185,28 @@ workflow, then each repo opts in with a few lines:
 
 ```yaml
 name: prowl-review
+# Single-row setup (#single-row): chain off your CI workflow so the branded
+# Prowl Review check run is the only prowl-review row on the PR. Your CI
+# workflow must subscribe to the PR transitions that should trigger a review.
 on:
-  pull_request:
-    types: [opened, synchronize, ready_for_review, reopened]
+  workflow_run:
+    workflows: [CI]        # the `name:` of this repo's CI workflow
+    types: [completed]
 permissions:
   pull-requests: write
   issues: write
   checks: write
   contents: read
+  actions: read            # PR-resolution fallback reads the completed CI run
 jobs:
   review:
     # Replace YOUR-ORG with the org or owner that hosts the reusable workflow.
     uses: YOUR-ORG/.github/.github/workflows/prowl-review.yml@v1
     secrets: inherit
+    with:
+      # workflow_run hides this workflow's Actions row, so keep the branded
+      # replacement check visible unless another required status owns the gate.
+      check-run: true
 ```
 
 Templates live in the repo under `examples/reusable/`.
