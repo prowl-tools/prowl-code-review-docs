@@ -38,9 +38,11 @@ jobs:
 
 :::note One checks row or two?
 A `pull_request`-triggered workflow always adds its own octocat Actions row to the
-PR checks list, next to the branded [Prowl Review check run](#check-run) — so
-prowl-review appears twice. For the hosted-reviewer look (the branded row **only**),
-use the [single-row `workflow_run` setup](#single-row) below.
+PR checks list. With the default `checkRun.enabled: false`, that Actions row is the
+only prowl-review status. If you also enable the branded
+[Prowl Review check run](#check-run) with `checkRun.enabled: true`, prowl-review
+appears twice. For the hosted-reviewer look (the branded row **only**), use the
+[single-row `workflow_run` setup](#single-row) below.
 :::
 
 ## Single branded row (`workflow_run`) {#single-row}
@@ -62,6 +64,10 @@ permissions:
   checks: write
   contents: read
   actions: read            # read the completed CI run for PR resolution
+jobs:
+  review:
+    if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
+    # Resolve the PR number, then pass it to prowl-review with `pr-number`.
 ```
 
 Requirements and behavior:
@@ -69,8 +75,9 @@ Requirements and behavior:
 - **Your CI workflow must subscribe to the PR transitions** that should trigger a
   review (`workflow_run` does not preserve the original action):
   `on: pull_request: types: [opened, synchronize, ready_for_review, reopened]`.
-- The review starts when CI **succeeds** (~1 min after the PR event); failed or
-  cancelled CI never starts a review.
+- The workflow is triggered after each completed CI run, but the review job runs
+  only when CI **succeeds** and that CI run came from a `pull_request` event;
+  failed, cancelled, or non-PR CI runs skip the review.
 - The workflow resolves the PR from the `workflow_run` payload (requiring exactly
   one open PR at the CI head SHA) and hands it to the action via the `pr-number`
   input; fork and draft PRs are skipped safely.
@@ -200,6 +207,7 @@ permissions:
   actions: read            # PR-resolution fallback reads the completed CI run
 jobs:
   review:
+    if: ${{ github.event.workflow_run.event == 'pull_request' && github.event.workflow_run.conclusion == 'success' }}
     # Replace YOUR-ORG with the org or owner that hosts the reusable workflow.
     uses: YOUR-ORG/.github/.github/workflows/prowl-review.yml@v1
     secrets: inherit
