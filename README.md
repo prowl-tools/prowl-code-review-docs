@@ -1,9 +1,15 @@
 # prowl-code-review-docs
 
+> **Archived (2026-08-26).** This documentation site is retired and `review.prowl.tools` no
+> longer serves it. `prowl-review` is now maintained as its author's internal code-review tool,
+> and its documentation lives next to the code in
+> [`prowl-tools/prowl-code-review/docs/`](https://github.com/prowl-tools/prowl-code-review/tree/main/docs).
+> This repository is kept read-only for reference.
+
 Documentation site for [**prowl-review**](https://github.com/prowl-tools/prowl-code-review)
-— the BYOK AI code-review tool in the Prowl QA suite. Built with
-[Docusaurus](https://docusaurus.io), themed to match the suite, deployed at
-**review.prowl.tools**.
+— the BYOK AI code-review tool. Built with
+[Docusaurus](https://docusaurus.io), themed to match the suite, formerly deployed at
+`review.prowl.tools`.
 
 ## Develop
 
